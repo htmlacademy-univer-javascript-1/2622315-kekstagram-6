@@ -11,4 +11,4 @@ function isMeetingWithinWorkday(startDay, endDay, meetingStart, meetingTime) {
     const meetingEndMinutes = meetingStartMinutes + meetingTime;
 
     return meetingStartMinutes >= workStart && meetingEndMinutes <= workEnd;
-}
+   }
