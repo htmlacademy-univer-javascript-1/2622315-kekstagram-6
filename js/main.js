@@ -33,3 +33,4 @@ const generatePhotos = () => Array.from({ length: 25 }, createPhoto);
 const photos = generatePhotos();
 
 export { photos };
+ 
