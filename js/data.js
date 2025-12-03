@@ -1,3 +1,6 @@
+import {getRandomInteger,createRandomIdFromRangeGenerator,createRandomComment} from './utils.js';
+
+
 const descriptions = [
   'Рассвет в горах',
   'Улица старого города',
@@ -41,4 +44,15 @@ const commentsList = [
 
 const names = ['Артём', 'Александра', 'Петр', 'Никита', 'Виктория', 'Савелий', 'Анна', 'Дарья'];
 
-export { descriptions, commentsList, names };
+const getId = createRandomIdFromRangeGenerator(1,25);
+const getUrl = createRandomIdFromRangeGenerator(1,25);
+
+const photoDescription = () => ({
+  id: getId(),
+  url: `photos/${getUrl()}.jpg`,
+  descriptions: descriptions[getRandomInteger(0,19)],
+  likes: getRandomInteger(15,200),
+  comments: createRandomComment(names,commentsList)
+});
+const result = () => Array.from({length: 25},photoDescription);
+export {result};
