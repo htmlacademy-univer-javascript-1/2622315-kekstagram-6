@@ -1,2 +1,5 @@
-import {result} from './data.js';
-result();
+
+import {renderSimularPictures} from './picture.js';
+import { openForm } from './form.js';
+renderSimularPictures();
+openForm();
