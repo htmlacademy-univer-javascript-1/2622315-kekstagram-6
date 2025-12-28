@@ -1,6 +1,3 @@
-import {getRandomInteger,createRandomIdFromRangeGenerator,createRandomComment} from './utils.js';
-
-
 const descriptions = [
   'Рассвет в горах',
   'Улица старого города',
