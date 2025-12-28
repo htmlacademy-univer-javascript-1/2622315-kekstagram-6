@@ -8,6 +8,25 @@ const form = document.querySelector('.img-upload__form');
 const hashteg = form.querySelector('.text__hashtags');
 const description = form.querySelector('.text__description');
 
+const pristine = new Pristine(form, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'form__item--invalid',
+  successClass: 'form__item--valid',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'p',
+  errorTextClass: 'form__error'
+});
+
+const regex = /^#[a-zA-Zа-яёА-ЯЁ0-9]{1,19}$/i;
+const maxHashtagCount = 5;
+const errors = {
+  invalidCount: 'Колчичество хэштегов больше пяти!',
+  invalidUnique: 'Хэштеги не должны повторяться!',
+  invalidReg: 'Некорректный хэштег!'
+};
+
+let errorType = '';
+
 const onDocumentKeydown = (evt) => {
   if(document.activeElement !== hashteg && document.activeElement !== description){
     onEscapePress(evt, closeForm);
@@ -28,30 +47,12 @@ function closeForm(){
   file.value = '';
   hashteg.value = '';
   description.value = '';
+  pristine.reset();
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
 const closeButton = document.querySelector('.img-upload__cancel');
 closeButton.addEventListener('click',closeForm);
-
-const pristine = new Pristine(form, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'form__item--invalid',
-  successClass: 'form__item--valid',
-  errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'p',
-  errorTextClass: 'form__error'
-});
-
-const regex = /^#[a-zA-Zа-яёА-ЯЁ0-9]{1,19}$/i;
-const maxHashtagCount = 5;
-const errors = {
-  invalidCount: 'Колчичество хэштегов больше пяти!',
-  invalidUnique: 'Хэштеги не должны повторяться!',
-  invalidReg: 'Некорректный хэштег!'
-};
-
-let errorType = '';
 
 function validateHashtag(value){
   const hashtegs = value.split(/\s+/).filter(Boolean);
