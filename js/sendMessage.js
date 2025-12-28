@@ -1,41 +1,35 @@
 import { onEscapePress } from './utils.js';
 
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const SUCCESS_TEMPLATE = document.querySelector('#success').content.querySelector('.success');
+const ERROR_TEMPLATE = document.querySelector('#error').content.querySelector('.error');
 const body = document.querySelector('body');
-const success = successTemplate.cloneNode(true);
-const closeButtonSuccess = success.querySelector('.success__button');
 
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-const error = errorTemplate.cloneNode(true);
-const closeButtonError = error.querySelector('.error__button');
+const createMessageHandler = (template) => () => {
+  const message = template.cloneNode(true);
+  const closeButton = message.querySelector('button');
 
-function initializeMessageHandlers(message,closeButton) {
-  message.classList.add('hidden');
-  body.appendChild(message);
   const onDocumentKeydown = (evt) => onEscapePress(evt, closeMessage);
 
   function closeMessage(){
-    message.classList.add('hidden');
+    message.remove();
     document.removeEventListener('keydown', onDocumentKeydown);
+    document.removeEventListener('click', onDocumentClick);
   }
 
-  function showMessage(){
-    message.classList.remove('hidden');
-    document.addEventListener('keydown', onDocumentKeydown);
+  function onDocumentClick(evt){
+    if (evt.target === message) {
+      closeMessage();
+    }
   }
 
   closeButton.addEventListener('click', closeMessage);
+  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('click', onDocumentClick);
 
-  document.addEventListener('click', (evt) => {
-    if(evt.target === message){
-      closeMessage();
-    }
-  });
+  body.appendChild(message);
+};
 
-  return showMessage;
-}
+const showSuccess = createMessageHandler(SUCCESS_TEMPLATE);
+const showError = createMessageHandler(ERROR_TEMPLATE);
 
-const showSuccess = initializeMessageHandlers(success,closeButtonSuccess);
-const showError = initializeMessageHandlers(error,closeButtonError);
-
-export { showSuccess, showError};
+export { showSuccess, showError };

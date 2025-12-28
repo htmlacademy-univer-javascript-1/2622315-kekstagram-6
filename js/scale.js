@@ -1,24 +1,23 @@
-const maxValue = '100%';
-const minValue = '25%';
-const scaleValue = document.querySelector('.scale__control--value');
+const MAX_SCALE_VALUE = '100%';
+const MIN_SCALE_VALUE = '25%';
+const scaleControlValue = document.querySelector('.scale__control--value');
 const scaleSmaller = document.querySelector('.scale__control--smaller');
 const scaleBigger = document.querySelector('.scale__control--bigger');
-const imgUpload = document.querySelector('.img-upload__preview');
+const imgUpload = document.querySelector('.img-upload__preview img');
 
-function scaleImg(){
-  scaleBigger.addEventListener('click',()=>{
-    if(scaleValue.value !== maxValue){
-      scaleValue.value = `${parseInt(scaleValue.value.replace('%', ''), 10) + 25}%`;
-      imgUpload.style.transform = `scale(${ parseInt(scaleValue.value.replace('%', ''), 10) / 100 })`;
-    }
-  });
+const updateScale = (increment) => {
+  const currentValue = parseInt(scaleControlValue.value.replace('%', ''), 10);
+  const newValue = currentValue + increment;
 
-  scaleSmaller.addEventListener('click',()=>{
-    if(scaleValue.value !== minValue){
-      scaleValue.value = `${parseInt(scaleValue.value.replace('%', ''), 10) - 25}%`;
-      imgUpload.style.transform = `scale(${ parseInt(scaleValue.value.replace('%', ''), 10) / 100 })`;
-    }
-  });
-}
+  if (newValue <= parseInt(MAX_SCALE_VALUE, 10) && newValue >= parseInt(MIN_SCALE_VALUE, 10)) {
+    scaleControlValue.value = `${newValue}%`;
+    imgUpload.style.transform = `scale(${newValue / 100})`;
+  }
+};
 
-export{scaleImg};
+const scaleImg = () => {
+  scaleBigger.addEventListener('click', () => updateScale(25));
+  scaleSmaller.addEventListener('click', () => updateScale(-25));
+};
+
+export { scaleImg };
