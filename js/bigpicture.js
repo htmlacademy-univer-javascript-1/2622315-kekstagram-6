@@ -24,30 +24,41 @@ function fillBigPicture(picture, comments) {
   commentsCount.textContent = comments.length;
   currentComments = comments;
   commentsShown = 0;
+
   fillComments();
+
   socialCaption.textContent = picture.querySelector('.picture__img').alt;
   socialCommentCount.classList.remove('hidden');
+
   if(comments.length > commentToLoadCount){
     commentsLoader.classList.remove('hidden');
   }
+
   bigPicture.classList.remove('hidden');
 }
 
 function fillComments() {
   const fragment = document.createDocumentFragment();
   const commentsToShow = currentComments.slice(commentsShown, commentsShown + 5);
+
   commentsToShow.forEach((commentData) => {
     const comment = clone.cloneNode(true);
+
     comment.querySelector('.social__picture').src = commentData.avatar;
     comment.querySelector('.social__picture').alt = commentData.name;
     comment.querySelector('.social__text').textContent = commentData.message;
+
     fragment.appendChild(comment);
   });
+
   socialComments.appendChild(fragment);
+
   commentsShown += commentsToShow.length;
+
   if (commentsShown >= currentComments.length) {
     commentsLoader.classList.add('hidden');
   }
+
   updateCommentCount();
 }
 
