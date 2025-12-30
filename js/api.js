@@ -15,7 +15,7 @@ function createErrorDiv(error) {
   errorDiv.style.backgroundColor = 'white';
   errorDiv.style.borderBottom = '2px solid red';
   errorDiv.style.zIndex = '1000';
-  errorDiv.innerText = `Упс, ошибка со стороны сервера, попробуйте перезагрузить страницу или зайти попозже :( ${error}`;
+  errorDiv.innerText = `Упс, ошибка со cтороны сервера, попробуйте перезагрузить страницу или зайти попозже :( ${error}`;
   errorDiv.style.textAlign = 'center';
   document.body.appendChild(errorDiv);
 }
